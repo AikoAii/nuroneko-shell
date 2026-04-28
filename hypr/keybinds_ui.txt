@@ -1,0 +1,74 @@
+󰆍 SYSTEM / APPS
+SUPER + ENTER        → Terminal
+SUPER + D            → App Launcher (fuzzel)
+SUPER + B            → Browser
+SUPER + E            → File Manager (GUI)
+SUPER + TAB          → File Manager (CLI)
+SUPER + W            → Change Wallpaper
+
+󰘳 WINDOW CONTROL
+SUPER + Q            → Close Window
+SUPER + SPACE        → Toggle Floating
+SUPER + F            → Fullscreen
+SUPER + J            → Toggle Split Layout
+SUPER + P            → Toggle Pseudo
+
+󰘶 WORKSPACE
+SUPER + 1-0          → Switch Workspace
+SUPER + SHIFT + 1-0  → Move Window to Workspace
+
+󰖨 SCREENSHOT / RECORD
+Print                → Screenshot
+SHIFT + Print        → Screen Record
+
+󰣇 UTILITIES
+SUPER + V            → Clipboard Manager
+SUPER + SHIFT + V    → Clear Clipboard
+SUPER + C            → Calculator
+SUPER + N            → Notes
+SUPER + O            → System Monitor (btop)
+
+󰐥 POWER 
+SUPER + L                    → Lock Screen
+SUPER + CTRL + DELETE       → Powermenu
+SUPER + CTRL + SHIFT + Q    → Logout
+SUPER + CTRL + SHIFT + S    → Shutdown
+SUPER + CTRL + SHIFT + R    → Reboot
+
+CTRL + SHIFT + R            → Reload Hyprland Config
+
+󰌌 SCRATCHPAD
+SUPER + S            → Toggle Scratchpad
+SUPER + SHIFT + S    → Move Window to Scratchpad
+SUPER + T            → Terminal (Scratchpad)
+SUPER + M            → Music (Scratchpad)
+
+󰀻 TOGGLES
+SUPER + U            → Toggle Waybar
+
+󰖳 FOCUS
+SUPER + ←            → Focus Left
+SUPER + →            → Focus Right
+SUPER + ↑            → Focus Up
+SUPER + ↓            → Focus Down
+
+󰆧 MOUSE
+SUPER + Scroll Up    → Next Workspace
+SUPER + Scroll Down  → Previous Workspace
+SUPER + Left Click   → Move Window
+SUPER + Right Click  → Resize Window
+
+󰕾 AUDIO
+Volume Up            → Increase Volume
+Volume Down          → Decrease Volume
+Mute                 → Toggle Mute
+Mic Mute             → Toggle Mic
+
+󰃠 BRIGHTNESS
+Brightness Up        → Increase Brightness
+Brightness Down      → Decrease Brightness
+
+󰎆 MEDIA PLAYER
+Next Track           → Next
+Play / Pause         → Toggle Play
+Previous Track       → Previous
