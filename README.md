@@ -16,14 +16,13 @@
 - **File Manager**: Yazi (CLI)
 - **Theme**: Catppuccin Mocha aesthetic across all applications
 - **Audio**: Pipewire + Wireplumber
-- **Universal Init**: Support for systemd, dinit, OpenRC, and runit
 
 ## Dependencies
 
 See the [packages](./packages) directory for explicit dependency lists based on your distribution:
-- [Arch Linux](./packages/arch.txt) (systemd)
-- [Artix Linux](./packages/artix.txt) (dinit, runit, openrc)
-- [Fedora](./packages/fedora.txt) (systemd)
+- [Arch Linux](./packages/arch.txt)
+- [Artix Linux](./packages/artix.txt)
+- [Fedora](./packages/fedora.txt)
 
 ## Installation
 
@@ -31,7 +30,7 @@ We provide a safe, modular installation script that will backup your existing co
 
 ```bash
 # Clone the repository
-git clone https://github.com/AikoAii/dotfiles-hyprland.git ~/.config/dotfiles
+git clone https://github.com/aikoaii/dotfiles-hyprland.git ~/.config/dotfiles
 
 # Run the installer
 cd ~/.config/dotfiles
@@ -40,7 +39,7 @@ cd ~/.config/dotfiles
 
 For a detailed manual installation, please refer to the [Installation Guide](docs/installation.md).
 
-## Keybindings
+##  Keybindings
 
 The configuration uses a heavily keyboard-focused workflow based around the `SUPER` modifier.
 

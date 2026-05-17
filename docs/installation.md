@@ -1,6 +1,6 @@
 # Installation Guide
 
-Follow these steps to manually install the AikoAi dotfiles, or to understand what the automated installer does.
+Follow these steps to manually install the dotfiles, or to understand what the automated installer does.
 
 ## 1. Install Dependencies
 
@@ -25,7 +25,7 @@ mv ~/.config/waybar ~/.config.bak/
 
 Clone the repository to a permanent location (e.g., `~/.config/dotfiles`):
 ```bash
-git clone https://github.com/chikochi/dotfiles-hyprland.git ~/.config/dotfiles
+git clone https://github.com/<your-username>/dotfiles-hyprland.git ~/.config/dotfiles
 ```
 
 Then, symlink the configs to your `~/.config/` directory:

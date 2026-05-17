@@ -1,4 +1,4 @@
-# 🌙 Aiko's Neovim Config
+# Neovim Config
 
 Minimal and modern Neovim configuration powered by LazyVim.
 
@@ -85,7 +85,7 @@ nvim/
 ## 🚀 Installation
 
 ```bash
-git clone https://github.com/AikoAii/nvim ~/.config/nvim
+git clone https://github.com/<your-username>/nvim ~/.config/nvim
 ```
 
 Open Neovim:

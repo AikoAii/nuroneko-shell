@@ -114,9 +114,9 @@ alias glog="git log --oneline --graph --decorate"
 alias gundo="git reset --soft HEAD~1"
 alias gclean="git clean -fd"
 
-# identity switch
-alias akun-a='git config user.name "AikoAiii"; git config user.email "annurmusthofa.id@gmail.com"; echo "Akun A aktif"'
-alias akun-b='git config user.name "AikoAii"; git config user.email "yaikoaiii@gmail.com"; echo "Akun B aktif"'
+# identity switch (customize with your own accounts)
+# alias account-a='git config user.name "Your Name"; git config user.email "your@email.com"; echo "Account A active"'
+# alias account-b='git config user.name "Alt Name"; git config user.email "alt@email.com"; echo "Account B active"'
 
 #####################################
 ## ==> QUICK ACCESS
