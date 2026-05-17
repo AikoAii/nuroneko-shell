@@ -11,6 +11,15 @@
 *~
 .DS_Store
 
+# Neovim generated
+configs/nvim/lazy-lock.json
+
+# Tmux plugins (managed by TPM)
+configs/tmux/plugins/
+
+# Fish generated
+configs/fish/fish_variables
+
 # User-specific
 .env
 .env.local
