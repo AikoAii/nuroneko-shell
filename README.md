@@ -30,7 +30,7 @@ We provide a safe, modular installation script that will backup your existing co
 
 ```bash
 # Clone the repository
-git clone https://github.com/aikoaii/dotfiles-hyprland.git ~/.config/dotfiles
+git clone https://github.com/AikoAii/dotfiles-hyprland.git ~/.config/dotfiles
 
 # Run the installer
 cd ~/.config/dotfiles
