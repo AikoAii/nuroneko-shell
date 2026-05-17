@@ -1,0 +1,79 @@
+* {
+    main-bg:       #1e1e2eE6;
+    main-fg:       #cdd6f4;
+    main-br:       #89b4fa;
+
+    select-bg:     #313244CC;
+    select-fg:     #89b4fa;
+
+    background-color: transparent;
+}
+
+window {
+    transparency: "real";
+
+    width: 1400px;
+    height: 850px;
+
+    border: 2px;
+    border-radius: 18px;
+    border-color: @main-br;
+
+    background-color: @main-bg;
+}
+
+mainbox {
+    spacing: 0em;
+    padding: 1.5em;
+
+    children: [ "dummywall", "listview" ];
+
+    background-color: transparent;
+}
+
+dummywall {
+    width: 40em;
+
+    border-radius: 18px;
+
+    background-image: url("~/.local/share/wallpapers/current", height);
+    background-size: cover;
+}
+
+listview {
+    columns: 3;
+    lines: 2;
+
+    spacing: 1em;
+
+    cycle: true;
+    dynamic: true;
+
+    scrollbar: false;
+
+    layout: vertical;
+
+    background-color: transparent;
+}
+
+element {
+    padding: 0.6em;
+
+    border-radius: 16px;
+
+    background-color: transparent;
+}
+
+element selected.normal {
+    background-color: @select-bg;
+}
+
+element-icon {
+    size: 16em;
+
+    border-radius: 14px;
+}
+
+element-text {
+    enabled: false;
+}
