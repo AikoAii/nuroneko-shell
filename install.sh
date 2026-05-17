@@ -17,7 +17,6 @@ source "${DOTFILES_DIR}/scripts/install/detect-distro.sh"
 source "${DOTFILES_DIR}/scripts/install/dependencies.sh"
 source "${DOTFILES_DIR}/scripts/install/backup.sh"
 source "${DOTFILES_DIR}/scripts/install/symlink.sh"
-source "${DOTFILES_DIR}/scripts/install/fonts.sh"
 source "${DOTFILES_DIR}/scripts/install/services.sh"
 source "${DOTFILES_DIR}/scripts/install/permissions.sh"
 source "${DOTFILES_DIR}/scripts/install/finalize.sh"
@@ -27,7 +26,6 @@ detect_distro
 install_dependencies
 backup_existing_configs
 create_symlinks
-install_fonts
 setup_services
 set_permissions
 finalize_install
