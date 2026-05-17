@@ -1,4 +1,4 @@
-# AikoAi Hyprland Dotfiles
+# Hyprland Dotfiles
 
 > A clean, modular, and keyboard-driven Hyprland configuration designed for maximum productivity and aesthetics.
 
