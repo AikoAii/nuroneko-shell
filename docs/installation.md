@@ -25,7 +25,7 @@ mv ~/.config/waybar ~/.config.bak/
 
 Clone the repository to a permanent location (e.g., `~/.config/dotfiles`):
 ```bash
-git clone https://github.com/<your-username>/dotfiles-hyprland.git ~/.config/dotfiles
+git clone https://github.com/AikoAii/dotfiles-hyprland.git ~/.config/dotfiles
 ```
 
 Then, symlink the configs to your `~/.config/` directory:
