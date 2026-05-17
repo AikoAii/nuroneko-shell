@@ -4,17 +4,23 @@
 
 enable_service() {
     local service="$1"
-    local level="${2:-system}" # system or user
-    
+    local level="${2:-system}"
+
     if [[ "$level" == "user" ]]; then
-        warn "runit does not natively handle user services out-of-the-box."
-        warn "Enabling $service system-wide instead."
+        warn "runit does not natively support user services."
+        warn "Enabling ${service} system-wide instead."
     fi
-    
-    # Symlink from /etc/sv to /var/service
+
     if [[ -d "/etc/sv/${service}" ]]; then
-        sudo ln -sf "/etc/sv/${service}" "/var/service/"
-        sudo sv start "${service}" 2>/dev/null || true
+
+        sudo ln -sf "/etc/sv/${service}" "/var/service/" \
+            >/dev/null 2>&1 \
+            || warn "Failed to link runit service: ${service}"
+
+        sudo sv start "${service}" \
+            >/dev/null 2>&1 \
+            || warn "Failed to start runit service: ${service}"
+
     else
         warn "Service directory /etc/sv/${service} not found."
     fi
@@ -22,15 +28,24 @@ enable_service() {
 
 start_service() {
     local service="$1"
-    sudo sv start "${service}" 2>/dev/null || true
+
+    sudo sv start "${service}" \
+        >/dev/null 2>&1 \
+        || warn "Failed to start runit service: ${service}"
 }
 
 restart_service() {
     local service="$1"
-    sudo sv restart "${service}" 2>/dev/null || true
+
+    sudo sv restart "${service}" \
+        >/dev/null 2>&1 \
+        || warn "Failed to restart runit service: ${service}"
 }
 
 stop_service() {
     local service="$1"
-    sudo sv stop "${service}" 2>/dev/null || true
+
+    sudo sv stop "${service}" \
+        >/dev/null 2>&1 \
+        || warn "Failed to stop runit service: ${service}"
 }

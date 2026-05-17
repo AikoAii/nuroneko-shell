@@ -4,27 +4,42 @@
 
 enable_service() {
     local service="$1"
-    local level="${2:-system}" # system or user
-    
+    local level="${2:-system}"
+
     if [[ "$level" == "user" ]]; then
-        warn "OpenRC does not natively handle user services out-of-the-box."
-        warn "Enabling $service system-wide instead."
+        warn "OpenRC does not natively support user services."
+        warn "Enabling ${service} system-wide instead."
     fi
-    sudo rc-update add "${service}" default 2>/dev/null || true
-    sudo rc-service "${service}" start 2>/dev/null || true
+
+    sudo rc-update add "${service}" default \
+        >/dev/null 2>&1 \
+        || warn "Failed to enable OpenRC service: ${service}"
+
+    sudo rc-service "${service}" start \
+        >/dev/null 2>&1 \
+        || warn "Failed to start OpenRC service: ${service}"
 }
 
 start_service() {
     local service="$1"
-    sudo rc-service "${service}" start 2>/dev/null || true
+
+    sudo rc-service "${service}" start \
+        >/dev/null 2>&1 \
+        || warn "Failed to start OpenRC service: ${service}"
 }
 
 restart_service() {
     local service="$1"
-    sudo rc-service "${service}" restart 2>/dev/null || true
+
+    sudo rc-service "${service}" restart \
+        >/dev/null 2>&1 \
+        || warn "Failed to restart OpenRC service: ${service}"
 }
 
 stop_service() {
     local service="$1"
-    sudo rc-service "${service}" stop 2>/dev/null || true
+
+    sudo rc-service "${service}" stop \
+        >/dev/null 2>&1 \
+        || warn "Failed to stop OpenRC service: ${service}"
 }
