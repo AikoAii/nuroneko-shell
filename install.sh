@@ -12,6 +12,7 @@ export BACKED_UP_ITEMS=0
 export ENABLED_SERVICES=0
 export INSTALL_WARNINGS=0
 
+# shellcheck source=/dev/null
 source "${DOTFILES_DIR}/scripts/utils/lib.sh"
 
 trap 'error "Installation failed in ${BASH_SOURCE[1]} at line ${BASH_LINENO[0]}: ${BASH_COMMAND}"' ERR
@@ -41,6 +42,7 @@ safe_source() {
   [[ -f "$file" ]] ||
     error "Missing required module: ${file}"
 
+# shellcheck source=/dev/null
   source "$file" ||
     error "Failed to source module: ${file}"
 }
@@ -76,7 +78,7 @@ run_step() {
 
     info "Running step: ${fn}"
 
-    "$fn"
+    "$fn" || error "Step failed: ${fn}"
 }
 
 run_step run_checks
