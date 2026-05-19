@@ -1,34 +1,45 @@
 #!/usr/bin/env bash
 
 detect_distro() {
-    info "Detecting Linux distribution..."
 
-    # --- Detect os-release ---
-    if [[ -f /etc/os-release ]]; then
-        source /etc/os-release
+  info "Detecting Linux distribution..."
 
-        export OS_ID="${ID:-unknown}"
-        export OS_LIKE="${ID_LIKE:-}"
-        export OS_NAME="${PRETTY_NAME:-Linux}"
+  # ==========================================================
+  # Detect os-release
+  # ==========================================================
 
-        ok "Detected OS: ${OS_NAME}"
-    else
-        error "Cannot detect OS! /etc/os-release not found."
+  if [[ -f /etc/os-release ]]; then
+
+    source /etc/os-release
+
+    export OS_ID="${ID:-unknown}"
+    export OS_LIKE="${ID_LIKE:-}"
+    export OS_NAME="${PRETTY_NAME:-Linux}"
+
+  else
+    error "Cannot detect OS: /etc/os-release not found."
+  fi
+
+  ok "Detected OS: ${OS_NAME}"
+
+  # ==========================================================
+  # Detect package manager
+  # ==========================================================
+
+  local detected_pkg_manager=""
+
+  for manager in pacman dnf apt zypper; do
+
+    if command -v "$manager" >/dev/null 2>&1; then
+      detected_pkg_manager="$manager"
+      break
     fi
+  done
 
-    # --- Detect package manager ---
-    if command -v pacman &>/dev/null; then
-        export PKG_MANAGER="pacman"
+  [[ -n "$detected_pkg_manager" ]] ||
+    error "No supported package manager found."
 
-    elif command -v dnf &>/dev/null; then
-        export PKG_MANAGER="dnf"
+  export PKG_MANAGER="$detected_pkg_manager"
 
-    elif command -v apt &>/dev/null; then
-        export PKG_MANAGER="apt"
-
-    else
-        error "No supported package manager found."
-    fi
-
-    ok "Package manager: ${PKG_MANAGER}"
+  ok "Package manager: ${PKG_MANAGER}"
 }

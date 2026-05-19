@@ -12,8 +12,9 @@ create_symlinks() {
     local target="${HOME}/.config/$(basename "$conf")"
 
     if safe_symlink "$conf" "$target"; then
-      info "Symlinked $(basename "$conf")"
-    fi
+    info "Symlinked $(basename "$conf")"
+    ((CREATED_SYMLINKS++))
+fi
 
   done
 
@@ -32,10 +33,12 @@ create_symlinks() {
 
       if safe_symlink "$script" "$target"; then
         info "Symlinked script $(basename "$script")"
+        ((CREATED_SYMLINKS++))
       fi
 
     done
   done
 
   ok "Symlinks created successfully."
+
 }

@@ -1,41 +1,64 @@
 #!/usr/bin/env bash
 
 install_dependencies() {
+
+  local SUDO=""
+  local HELPER=""
+
+  # --- Privilege escalation detection ---
+  if command -v sudo >/dev/null 2>&1; then
+    SUDO="sudo"
+
+  elif command -v doas >/dev/null 2>&1; then
+    SUDO="doas"
+
+  else
+    error "Neither sudo nor doas found."
+  fi
+
   info "Installing dependencies..."
+  info "Privilege escalation tool: ${SUDO}"
 
-  # --- Arch-based distros ---
-  if [[ "$OS_ID" == "arch" || "$OS_LIKE" == *"arch"* ]]; then
+  case "$PKG_MANAGER" in
 
-    local HELPER=""
+  # ==========================================================
+  # Pacman-based distros (Arch / Artix)
+  # ==========================================================
 
-    # --- Package files ---
+  pacman)
+
     local official_file=""
+    local aur_file="${DOTFILES_DIR}/packages/arch-aur.txt"
 
+    # --- Select package manifest ---
     if [[ "$OS_ID" == "artix" ]]; then
       official_file="${DOTFILES_DIR}/packages/artix.txt"
     else
       official_file="${DOTFILES_DIR}/packages/arch-official.txt"
     fi
-    local aur_file="${DOTFILES_DIR}/packages/arch-aur.txt"
 
     [[ -f "$official_file" ]] ||
       error "Missing package list: ${official_file}"
 
-    # --- Install official packages ---
+    # --- Read official packages ---
     mapfile -t packages < <(
       grep -vE '^\s*#|^\s*$' "$official_file"
     )
 
-    if [[ ${#packages[@]} -eq 0 ]]; then
+    [[ ${#packages[@]} -gt 0 ]] ||
       error "No packages found in ${official_file}"
-    fi
 
-    info "Installing official Arch packages..."
+    info "Installing official packages..."
 
-    sudo pacman -S --needed --noconfirm "${packages[@]}" ||
-      error "Failed to install official Arch packages"
+    "$SUDO" pacman -S --needed --noconfirm "${packages[@]}" ||
+      error "Failed to install official packages"
 
-    # --- Install AUR packages ---
+    INSTALLED_PACKAGES="${#packages[@]}"
+
+    # ======================================================
+    # AUR Packages
+    # ======================================================
+
     if [[ -f "$aur_file" ]]; then
 
       mapfile -t aur_packages < <(
@@ -44,6 +67,7 @@ install_dependencies() {
 
       if [[ ${#aur_packages[@]} -gt 0 ]]; then
 
+        # --- Detect AUR helper ---
         if command -v yay >/dev/null 2>&1; then
           HELPER="yay"
 
@@ -54,38 +78,53 @@ install_dependencies() {
           warn "No AUR helper detected. Skipping AUR packages."
         fi
 
-        info "Installing AUR packages using ${HELPER}..."
+        # --- Install AUR packages ---
+        if [[ -n "$HELPER" ]]; then
 
-        $HELPER -S --needed --noconfirm "${aur_packages[@]}" ||
-          warn "Failed to install some AUR packages"
+          info "Installing AUR packages using ${HELPER}..."
+
+          "$HELPER" -S --needed --noconfirm "${aur_packages[@]}" ||
+            warn "Failed to install some AUR packages"
+        fi
       fi
     fi
+    ;;
 
-  # --- Fedora-based distros ---
-  elif [[ "$OS_ID" == "fedora" || "$OS_LIKE" == *"fedora"* ]]; then
+  # ==========================================================
+  # Fedora
+  # ==========================================================
+
+  dnf)
 
     local packages_file="${DOTFILES_DIR}/packages/fedora.txt"
 
-    [[ -f "$packages_file" ]] || error "Missing package list: ${packages_file}"
+    [[ -f "$packages_file" ]] ||
+      error "Missing package list: ${packages_file}"
 
     mapfile -t packages < <(
       grep -vE '^\s*#|^\s*$' "$packages_file"
     )
 
-    if [[ ${#packages[@]} -eq 0 ]]; then
+    [[ ${#packages[@]} -gt 0 ]] ||
       error "No packages found in ${packages_file}"
-    fi
 
-    info "Using package manager: dnf"
+    info "Installing Fedora packages..."
 
-    sudo dnf install -y "${packages[@]}" ||
+    "$SUDO" dnf install -y "${packages[@]}" ||
       error "Failed to install Fedora dependencies"
+    ;;
 
-  else
-    warn "Unsupported OS for automatic dependency installation."
+  # ==========================================================
+  # Unsupported package manager
+  # ==========================================================
+
+  *)
+
+    warn "Unsupported package manager: ${PKG_MANAGER}"
     warn "Please install dependencies manually."
     return
-  fi
+    ;;
+  esac
 
   ok "Dependencies installed successfully."
 }

@@ -35,9 +35,6 @@ ok() {
   printf "%b[ OK ]%b  %s\n" "$GREEN" "$NC" "$*"
 }
 
-warn() {
-  printf "%b[WARN]%b  %s\n" "$YELLOW" "$NC" "$*" >&2
-}
 
 error() {
   printf "%b[ERR ]%b  %s\n" "$RED" "$NC" "$*" >&2
@@ -97,21 +94,24 @@ notify() {
 
 safe_symlink() {
 
-  local src="$1"
-  local dst="$2"
+    local src="$1"
+    local dst="$2"
 
-  [[ -e "$src" || -L "$src" ]] ||
-    error "Symlink source does not exist: ${src}"
+    [[ -e "$src" || -L "$src" ]] \
+        || error "Symlink source does not exist: ${src}"
 
-  # Backup non-symlink target
-  if [[ -e "$dst" && ! -L "$dst" ]]; then
-    warn "Target exists and is not a symlink: ${dst}"
-    return 1
-  fi
+    # Prevent overwriting real files/directories
+    if [[ -e "$dst" && ! -L "$dst" ]]; then
+        warn "Target exists and is not a symlink: ${dst}"
+        return 1
+    fi
 
-  ln -sfn "$src" "$dst" ||
-    error "Failed to create symlink: ${dst}"
+    ln -sfn "$src" "$dst" \
+        || error "Failed to create symlink: ${dst}"
+
+    return 0
 }
+
 
 ensure_dir() {
 
@@ -122,4 +122,11 @@ ensure_dir() {
     mkdir -p "$dir" ||
       error "Failed to create directory: ${dir}"
   fi
+}
+
+warn() {
+
+    ((INSTALL_WARNINGS++)) || true
+
+    printf "%b[WARN]%b  %s\n" "$YELLOW" "$NC" "$*" >&2
 }
