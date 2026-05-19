@@ -16,31 +16,32 @@ run_checks() {
     ok "OS: Linux"
 
     # --- Wayland Check ---
-    if [[ -z "${WAYLAND_DISPLAY:-}" ]] && [[ -z "${XDG_SESSION_TYPE:-}" ]]; then
-        warn "Wayland session not detected. This is fine during installation, but Hyprland requires Wayland at runtime."
+    if [[ "${XDG_SESSION_TYPE:-}" != "wayland" ]]; then
+        warn "Wayland session not detected. Hyprland requires Wayland at runtime."
     else
         ok "Session: Wayland"
-    fi
+     fi
 
     # --- Required commands ---
-    local required=(git ln mkdir cp chmod)
+    local required=(
+    git
+    ln
+    mkdir
+    cp
+    chmod
+    mv
+    find
+    grep
+    basename
+    date
+    sed
+    )
     for cmd in "${required[@]}"; do
         if ! command -v "$cmd" &>/dev/null; then
             error "Required command missing: $cmd"
         fi
     done
     ok "Core commands available"
-
-    # --- Package manager check ---
-    if command -v pacman &>/dev/null; then
-        export PKG_MANAGER="pacman"
-        ok "Package manager: pacman"
-    elif command -v dnf &>/dev/null; then
-        export PKG_MANAGER="dnf"
-        ok "Package manager: dnf"
-    else
-        warn "No supported package manager detected. Manual dependency install may be required."
-    fi
 
     # --- XDG directories ---
     ensure_dir "${XDG_CONFIG_HOME:-$HOME/.config}"

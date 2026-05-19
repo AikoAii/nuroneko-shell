@@ -3,6 +3,7 @@
 *.log
 *.err
 *.out
+*themes
 
 # Editor and IDE
 .vscode/
